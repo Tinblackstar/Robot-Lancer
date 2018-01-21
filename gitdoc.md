@@ -55,11 +55,17 @@ git commit -m "Update file_b" file_b
 
 更に，ファイル"file_c"を追加したが git 管理下に置きたくないとする．
 
-* .gitignore ファイルに"file_c"を追記．
+* .gitignore ファイルに"file_c"を追記
 
 ```sh
 touch .gitignore  # .gitignore の作成
 echo "file_c" >> .gitignore
+```
+
+* Git の状態を表示
+
+```sh
+git status
 ```
 
 ## Git 管理　＜リモート編＞
@@ -82,5 +88,79 @@ git pull
 # 最初は
 git push -u origin master
 # ２回目以降
+git push
+```
+
+* リモートリポジトリの一覧を表示
+
+```sh
+git remote
+```
+
+## Git 管理　＜ブランチ編＞
+
+* ブランチを切って作業する
+
+```sh
+git branch dev  # dev というブランチを追加
+git checkout dev  # dev に移動
+
+# 以下のコマンドで，上２つのコマンドを同時に実行できる
+git checkout -b dev
+```
+
+* リモートの dev ブランチにプッシュ
+
+```sh
+git push origin dev
+
+# その後 GitHub ページにてプルリクエスト，レビューしてマージ
+```
+
+* ローカルの master ブランチにマージ，リモートにプッシュ
+
+```sh
+git checkout master  # master ブランチに移動
+git merge dev  # マージ
+git branch -d dev  # dev ブランチ削除．しなくてもよい．
+git push
+```
+
+* ブランチ名の一覧を表示
+
+```sh
+git branch
+```
+
+## Git 管理　＜他人の Repo 編＞
+
+リポジトリ"Robot-Lancer"の持ち主を"Tinblackstar"，自分のユーザ名を"Sample"とする．
+
+* Fork してできた Sample/Robot-Lancer というリポジトリをローカルにクローン
+
+```sh
+git clone git@github.com:Sample/Robot-Lancer.git
+```
+
+* 変更を Sample/Robot-Lancer にプッシュ
+
+```sh
+git push
+
+# その後，Tinblackstar/Robot-Lancer にプルリクを送り，
+# レビューを行ったあと Tinblackstar がマージ．
+```
+
+* 自動的には Tinblackstar/Robot-Lancer での変更は Sample/Robot-Lancer には反映されないので，対処
+
+```sh
+# 元のリポジトリを"upstream"という名でリモートに追加
+git remote add upstream git@github.com:Tinblackstar/Robot-Lancer.git
+
+# upstream での変更をローカルに反映
+git pull upstream master
+git rebase master
+
+# さらに Sample/Robot-Lancer に反映
 git push
 ```

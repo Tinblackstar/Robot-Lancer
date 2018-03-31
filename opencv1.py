@@ -1,4 +1,3 @@
-
 import cv2
 import numpy as np
 
@@ -28,12 +27,4 @@ cv2.imshow('dst', img_dst)
 
 cv2.waitKey(0)             #キー入力待ち
 cv2.destroyAllWindows()
-TypeError                                 Traceback (most recent call last)
-<ipython-input-17-2b512e247a0c> in <module>()
-     12 rows, cols = img_dst.shape[:2]
-     13 
----> 14 for rho,theta in lines[ :,0]:
-     15   a=np.cos(theta)
-     16   b=np.sin(theta)
 
-TypeError: 'NoneType' object is not subscriptable
